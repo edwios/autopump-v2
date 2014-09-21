@@ -1,4 +1,5 @@
 // Water level monitor
+// Copyright 2014 ioStation Co. Ltd.
 
 #define version 103
 
@@ -16,14 +17,13 @@ int waterSensorL = A1;
 int lastRead = 0;
 
 
-const char * DID_WL = "vF86B705D61B0EE3&message=Water+level+abnormal%21";
+const char * DID_WL = "PUSHINGBOX_KEY&message=Water+level+abnormal%21";
 
 int waterLevelL;
 int waterLevelH;
 int state = 0;
 TCPClient client;
-//const char * serverName = "api.pushingbox.com";   // PushingBox API URL
-const char * serverName = "www.iostation.com";
+const char * serverName = "api.pushingbox.com";   // PushingBox API URL
 
 
 // This routine runs only once upon reset
@@ -51,7 +51,7 @@ void sendToPushingBox(const char * devid, String mesg, String mesg2)
     RGB.control(true);
     RGB.color(0,255,0);
     if (client.connect(serverName, 80)) {
-        client.print("GET /util/pushingbox.php?devid=");
+        client.print("GET /pushingbox.php?devid=");
         client.print(DID_WL);
         client.print(outMesg);
         client.println(" HTTP/1.1");
